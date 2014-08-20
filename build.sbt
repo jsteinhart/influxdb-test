@@ -1,6 +1,6 @@
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.2"
 
-val influxdb =  RootProject(uri("https://github.com/influxdb/influxdb-scala.git"))
+val influxdb =  RootProject(uri("https://github.com/lcycon/influxdb-scala.git"))
 
 val root = project in file(".") dependsOn influxdb
 
@@ -8,8 +8,9 @@ val root = project in file(".") dependsOn influxdb
 libraryDependencies ++= Seq(
   "org.scalanlp" %% "breeze" % "0.10-SNAPSHOT",
   "org.scalanlp" %% "breeze-natives" % "0.10-SNAPSHOT",
-  "org.json4s" %% "json4s-native" % "3.2.10",
-  "com.github.nscala-time" %% "nscala-time" % "1.2.0"
+  "com.github.nscala-time" %% "nscala-time" % "1.2.0",
+  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
+  "ch.qos.logback" % "logback-classic" % "1.1.2"
 )
 
 
