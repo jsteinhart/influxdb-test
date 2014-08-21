@@ -14,13 +14,19 @@ object Main extends LazyLogging {
 
   implicit val formats = Serialization.formats(NoTypeHints)
 
-  val n = 10
+  val n = 1000*60*5 //5 minutes
 
   def main( args:Array[String]):Unit = {
 
     logger.debug("about to initialize client")
     val db = new Client( username="bpr", password="BprBpr", database="bpr")
     logger.debug("client initialized")
+
+
+    val (resp, err) = db.query("DROP SERIES stuff")
+    logger.debug("response: " + resp)
+    logger.debug("error: " + err)
+
 
     val norm = Gaussian.distribution(0,1)
     val samples = norm.sample(n)
@@ -38,14 +44,13 @@ object Main extends LazyLogging {
 
     val tosubmit = Array(series)
 
-    val payload = write(tosubmit)
+    //val payload = write(tosubmit)
 
-    logger.trace("Series to submit" + payload)
+    //logger.trace("Series to submit" + payload)
 
 
     logger.debug("about to write series")
-    val res:Option[String] = db.writeSeriesWithTimePrecision(tosubmit, "ms")
-    res.foreach{logger.error(_)}
+    db.writeSeriesWithTimePrecision(tosubmit, "ms").foreach{logger.error(_)}
 
     db.close()
     //walk.foreach{println}
